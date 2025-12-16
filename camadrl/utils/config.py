@@ -10,6 +10,13 @@ import os
 import json
 import yaml
 
+# Import torch for device detection (if available)
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
+
 
 class Config:
     """
@@ -227,13 +234,5 @@ def get_default_config() -> Dict[str, Any]:
             "log_dir": "./logs",
             "use_tensorboard": True,
         },
-        "device": "cuda" if torch.cuda.is_available() else "cpu",
+        "device": "cuda" if (TORCH_AVAILABLE and torch.cuda.is_available()) else "cpu",
     }
-
-
-# Import torch for device detection
-try:
-    import torch
-except ImportError:
-    # If torch not available, default to cpu
-    pass
