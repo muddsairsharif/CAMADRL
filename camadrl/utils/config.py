@@ -8,9 +8,14 @@ configuration files.
 from typing import Any, Dict, Optional
 import os
 import json
-import yaml
 
-# Import torch for device detection (if available)
+# Import optional dependencies
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
+
 try:
     import torch
     TORCH_AVAILABLE = True
@@ -64,6 +69,8 @@ class Config:
             if ext == '.json':
                 config_dict = json.load(f)
             elif ext in ['.yaml', '.yml']:
+                if not YAML_AVAILABLE:
+                    raise ImportError("PyYAML is required for YAML file support. Install it with: pip install pyyaml")
                 config_dict = yaml.safe_load(f)
             else:
                 raise ValueError(f"Unsupported file format: {ext}")
@@ -97,6 +104,8 @@ class Config:
             if ext == '.json':
                 json.dump(self.config, f, indent=2)
             elif ext in ['.yaml', '.yml']:
+                if not YAML_AVAILABLE:
+                    raise ImportError("PyYAML is required for YAML file support. Install it with: pip install pyyaml")
                 yaml.dump(self.config, f, default_flow_style=False)
             else:
                 raise ValueError(f"Unsupported file format: {ext}")

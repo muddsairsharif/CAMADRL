@@ -270,6 +270,10 @@ class AsyncDistributedTrainer(DistributedTrainer):
     """
     Asynchronous distributed trainer using parameter server architecture.
     
+    **EXPERIMENTAL**: This class is currently under development.
+    The parameter server implementation is not yet complete.
+    Use DistributedTrainer for production workloads.
+    
     Implements asynchronous training where workers independently update
     a shared parameter server.
     """
@@ -314,11 +318,23 @@ class AsyncDistributedTrainer(DistributedTrainer):
         return metrics
     
     def _pull_parameters(self) -> None:
-        """Pull parameters from parameter server."""
-        # TODO: Implement parameter pulling logic
+        """
+        Pull parameters from parameter server.
+        
+        Note: This is a placeholder for future implementation.
+        Currently, parameters are synchronized through PyTorch DDP.
+        """
+        # Placeholder: Will implement parameter server synchronization
+        # For now, DDP handles parameter synchronization automatically
         pass
     
     def _push_gradients(self) -> None:
-        """Push gradients to parameter server."""
-        # TODO: Implement gradient pushing logic
+        """
+        Push gradients to parameter server.
+        
+        Note: This is a placeholder for future implementation.
+        Currently, gradients are synchronized through PyTorch DDP.
+        """
+        # Placeholder: Will implement gradient aggregation for parameter server
+        # For now, DDP handles gradient synchronization automatically
         pass
